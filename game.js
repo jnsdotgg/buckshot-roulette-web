@@ -115,7 +115,10 @@ function shoot(player) {
 
         }
     } else {
-        console.log("No shells balls in the chamber!");
+        alert("No shells in the chamber! Reloading...");
+        setTimeout(() => {
+            reload();
+        }, 1000);
     }
 
     nextTurn();
@@ -163,8 +166,16 @@ function renderTurn() {
     }
 }
 
+function reload() {
+    liveShells = 3;
+    blankShells = 2;
+    alert(`${liveShells} live & ${blankShells} blank shells`);
+    chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
+    shuffleArray(chamber);
+}
+
 function startGame() {
-    liveShells = 2;
+    liveShells = 1;
     blankShells = 2;
     chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
     shuffleArray(chamber);
