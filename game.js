@@ -1,15 +1,18 @@
-
 let player1Health;
 let player2Health;
-let turn
+let turn;
 let blankShells;
 let liveShells;
+let chamber;
+
+const statusElement = document.getElementById("status");
+const player1HealthElement = document.getElementById("player-1-health");
+const player2HealthElement = document.getElementById("player-2-health");
+const turnIndicatorElement = document.getElementById("turn-indicator");
+const shotgun = document.getElementById("shotgun");
 
 function setStatus(message) {
-    document.getElementById("status").innerText = message;
-    setTimeout(() => {
-        document.getElementById("status").innerText = "";
-    }, 2500);
+    statusElement.innerHTML = message;
 }
 
 function damage(player, amount) {
@@ -23,29 +26,96 @@ function damage(player, amount) {
     renderHealth();
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
 function shoot(player) {
 
-    if (turn == 1) {
+    if (chamber.length > 0) {
+        const shell = chamber.pop();
+        if (shell === 'live') {
 
-        if (player === "opponent") {
-            damage("player2", 1);
-            console.log(player2Health);
+            if (turn == 1) {
+                if (player === "opponent") {
+                    shotgun.dataset.aim = "2";
+                    setTimeout(() => {
+                        alert("Fired a live shell!");
+                        damage("player2", 1);
+                    }, 1000);
 
-        } else if (player === "self") {
-            damage("player1", 1);
-            console.log(player1Health);
+                } else if (player === "self") {
+                    shotgun.dataset.aim = "1";
+                    setTimeout(() => {
+                        alert("Fired a live shell!");
+                        damage("player1", 1);
+                    }, 1000);
+
+                }
+            }
+
+            if (turn == 2) {
+                if (player === "opponent") {
+                    shotgun.dataset.aim = "1";
+                    setTimeout(() => {
+                        alert("Fired a live shell!");
+                        damage("player1", 1);
+                    }, 1000);
+
+                } else if (player === "self") {
+                    shotgun.dataset.aim = "2";
+                    setTimeout(() => {
+                        alert("Fired a live shell!");
+                        damage("player2", 1);
+                    }, 1000);
+
+                }
+            }
+
+
+        } else {
+
+            if (turn == 1) {
+                if (player === "opponent") {
+                    shotgun.dataset.aim = "2";
+                    setTimeout(() => {
+                        alert("Fired a blank shell!");
+                    }, 1000);
+
+                } else if (player === "self") {
+                    shotgun.dataset.aim = "1";
+                    setTimeout(() => {
+                        alert("Fired a blank shell!");
+                        nextTurn();
+                    }, 1000);
+
+                }
+            }
+
+            if (turn == 2) {
+                if (player === "opponent") {
+                    shotgun.dataset.aim = "1";
+                    setTimeout(() => {
+                        alert("Fired a blank shell!");
+                        damage("player1", 1);
+                    }, 1000);
+
+                } else if (player === "self") {
+                    shotgun.dataset.aim = "2";
+                    setTimeout(() => {
+                        alert("Fired a blank shell!");
+                        nextTurn();
+                    }, 1000);
+
+                }
+            }
+
         }
-    }
-
-    if (turn == 2) {
-
-        if (player === "opponent") {
-            damage("player1", 1);
-
-        } else if (player === "self") {
-            damage("player2", 1);
-
-        }
+    } else {
+        console.log("No shells balls in the chamber!");
     }
 
     nextTurn();
@@ -53,41 +123,57 @@ function shoot(player) {
 
 function renderHealth() {
     if (player1Health <= 0) {
-        setStatus("Player 2 Wins!");
-        startGame();
+        setTimeout(() => {
+            alert("Player 2 won!");
+            startGame();
+        }, 1000);
     }
-    document.getElementById("player-1-health").innerText = player1Health;
-    document.getElementById("player-2-health").innerText = player2Health;
-}
 
-function renderShells() {
-    document.getElementById("blank-shells").innerText = blankShells;
-    document.getElementById("live-shells").innerText = liveShells;
+    if (player2Health <= 0) {
+        setTimeout(() => {
+            alert("Player 1 won!");
+            startGame();
+        }, 1000);
+    }
+    player1HealthElement.innerText = '⚡️'.repeat(player1Health);
+    player2HealthElement.innerText = '⚡️'.repeat(player2Health);
 }
 
 function nextTurn() {
-    if (turn == 1) {
-        turn = 2;
-    } else {
-        turn = 1;
-    }
-    renderTurn();
+    setTimeout(() => {
+        if (turn == 1) {
+            turn = 2;
+        } else {
+            turn = 1;
+        }
+        renderTurn();
+        shotgun.dataset.aim = "";
+    }, 1000);
 }
 
 function renderTurn() {
-    document.getElementById("turn-indicator").innerText = turn;
+    if (turn == 1) {
+        document.getElementById("player-2").classList.remove("active");
+        document.getElementById("player-1").classList.add("active");
+
+    } else {
+        document.getElementById("player-1").classList.remove("active");
+        document.getElementById("player-2").classList.add("active");
+
+    }
 }
 
 function startGame() {
     liveShells = 2;
     blankShells = 2;
-    renderShells();
-    setStatus("Game Started");
+    chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
+    shuffleArray(chamber);
     player1Health = 2;
     player2Health = 2;
     renderHealth();
     turn = Math.floor(Math.random() * 2) + 1;
     renderTurn();
+    alert(`Game started! ${liveShells} live & ${blankShells} blank shells`);
 }
 
 startGame();
