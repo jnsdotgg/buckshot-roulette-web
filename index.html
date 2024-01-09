@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="game">
+        <div><span id="blank-shells"></span> blank, <span id="live-shells"></span> live</div>
+        <br>
+        <div>Player 1 HP: <span id="player-1-health"></span></div>
+        <div>Player 2 HP: <span id="player-2-health"></span></div>
+
+        <div id="shotgun-wrapper">
+            <img id="shotgun" src="images/shotgun.png" alt="A picture of a shotgun">
+            <div>
+                <div>Does player <span id="turn-indicator">x</span>:</div>
+                <button onclick="shoot('opponent')" id="shoot-opponent">Shoot opponent</button>
+                <button onclick="shoot('self')" id="shoot-self">Shoot self</button>
+            </div>
+        </div>
+        <br>
+        <div><span id="status"></span></div>
+
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
