@@ -107,11 +107,13 @@ function shoot(player) {
                     alert("Fired a blank shell!");
                     nextTurn();
                 }, 1000);
-
             }
         }
-
     }
+    if (chamber === 0) {
+        reload();
+    }
+
     nextTurn();
 }
 
@@ -135,57 +137,45 @@ function renderHealth() {
 }
 
 function nextTurn() {
-
-    if (chamber.length > 0) {
-
-        setTimeout(() => {
-            if (turn == 1) {
-                turn = 2;
-            } else {
-                turn = 1;
-            }
-            renderTurn();
-            shotgun.dataset.aim = "";
-        }, 1000);
-        
-        function renderTurn() {
-            if (turn == 1) {
-                document.getElementById("player-2").classList.remove("active");
-                document.getElementById("player-1").classList.add("active");
-                
-            } else {
-                document.getElementById("player-1").classList.remove("active");
-                document.getElementById("player-2").classList.add("active");
-                
-            }
-        }
+    shotgun.dataset.aim = "";
+    if (turn == 1) {
+        turn = 2;
     } else {
-        alert("No shells in the chamber! Reloading...");
-        setTimeout(() => {
-            reload();
-        }, 1000);
+        turn = 1;
+    }
+    renderTurn();
+}
+
+function renderTurn() {
+    if (turn == 1) {
+        document.getElementById("player-2").classList.remove("active");
+        document.getElementById("player-1").classList.add("active");
+    } else {
+        document.getElementById("player-1").classList.remove("active");
+        document.getElementById("player-2").classList.add("active");
     }
 }
 
-    function reload() {
-        liveShells = 3;
-        blankShells = 2;
-        alert(`${liveShells} live & ${blankShells} blank shells`);
-        chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
-        shuffleArray(chamber);
-    }
+function reload() {
+    alert("No shells left! Reloading...");
+    liveShells = 3;
+    blankShells = 2;
+    alert(`${liveShells} live & ${blankShells} blank shells`);
+    chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
+    shuffleArray(chamber);
+}
 
-    function startGame() {
-        liveShells = 1;
-        blankShells = 2;
-        chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
-        shuffleArray(chamber);
-        player1Health = 2;
-        player2Health = 2;
-        renderHealth();
-        turn = Math.floor(Math.random() * 2) + 1;
-        renderTurn();
-        alert(`Game started! ${liveShells} live & ${blankShells} blank shells`);
-    }
+function startGame() {
+    liveShells = 1;
+    blankShells = 2;
+    chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
+    shuffleArray(chamber);
+    player1Health = 2;
+    player2Health = 2;
+    renderHealth();
+    turn = Math.floor(Math.random() * 2) + 1;
+    renderTurn();
+    alert(`Game started! ${liveShells} live & ${blankShells} blank shells`);
+}
 
-    startGame();
+startGame();
