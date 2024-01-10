@@ -137,13 +137,15 @@ function renderHealth() {
 }
 
 function nextTurn() {
-    shotgun.dataset.aim = "";
-    if (turn == 1) {
-        turn = 2;
-    } else {
-        turn = 1;
-    }
-    renderTurn();
+    setTimeout(() => {
+        shotgun.dataset.aim = "";
+        if (turn == 1) {
+            turn = 2;
+        } else {
+            turn = 1;
+        }
+        renderTurn();
+    }, 1000);
 }
 
 function renderTurn() {
