@@ -100,7 +100,6 @@ function shoot(player) {
                     shotgun.dataset.aim = "1";
                     setTimeout(() => {
                         alert("Fired a blank shell!");
-                        damage("player1", 1);
                     }, 1000);
 
                 } else if (player === "self") {
