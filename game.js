@@ -35,93 +35,86 @@ function shuffleArray(array) {
 
 function shoot(player) {
 
-    if (chamber.length > 0) {
-        const shell = chamber.pop();
-        if (shell === 'live') {
+    const shell = chamber.pop();
+    if (shell === 'live') {
 
-            if (turn == 1) {
-                if (player === "opponent") {
-                    shotgun.dataset.aim = "2";
-                    setTimeout(() => {
-                        alert("Fired a live shell!");
-                        damage("player2", 1);
-                    }, 1000);
+        if (turn == 1) {
+            if (player === "opponent") {
+                shotgun.dataset.aim = "2";
+                setTimeout(() => {
+                    alert("Fired a live shell!");
+                    damage("player2", 1);
+                }, 1000);
 
-                } else if (player === "self") {
-                    shotgun.dataset.aim = "1";
-                    setTimeout(() => {
-                        alert("Fired a live shell!");
-                        damage("player1", 1);
-                    }, 1000);
+            } else if (player === "self") {
+                shotgun.dataset.aim = "1";
+                setTimeout(() => {
+                    alert("Fired a live shell!");
+                    damage("player1", 1);
+                }, 1000);
 
-                }
             }
-
-            if (turn == 2) {
-                if (player === "opponent") {
-                    shotgun.dataset.aim = "1";
-                    setTimeout(() => {
-                        alert("Fired a live shell!");
-                        damage("player1", 1);
-                    }, 1000);
-
-                } else if (player === "self") {
-                    shotgun.dataset.aim = "2";
-                    setTimeout(() => {
-                        alert("Fired a live shell!");
-                        damage("player2", 1);
-                    }, 1000);
-
-                }
-            }
-
-
-        } else {
-
-            if (turn == 1) {
-                if (player === "opponent") {
-                    shotgun.dataset.aim = "2";
-                    setTimeout(() => {
-                        alert("Fired a blank shell!");
-                    }, 1000);
-
-                } else if (player === "self") {
-                    shotgun.dataset.aim = "1";
-                    setTimeout(() => {
-                        alert("Fired a blank shell!");
-                        nextTurn();
-                    }, 1000);
-
-                }
-            }
-
-            if (turn == 2) {
-                if (player === "opponent") {
-                    shotgun.dataset.aim = "1";
-                    setTimeout(() => {
-                        alert("Fired a blank shell!");
-                    }, 1000);
-
-                } else if (player === "self") {
-                    shotgun.dataset.aim = "2";
-                    setTimeout(() => {
-                        alert("Fired a blank shell!");
-                        nextTurn();
-                    }, 1000);
-
-                }
-            }
-
         }
-    } else {
-        alert("No shells in the chamber! Reloading...");
-        setTimeout(() => {
-            reload();
-        }, 1000);
-    }
 
+        if (turn == 2) {
+            if (player === "opponent") {
+                shotgun.dataset.aim = "1";
+                setTimeout(() => {
+                    alert("Fired a live shell!");
+                    damage("player1", 1);
+                }, 1000);
+
+            } else if (player === "self") {
+                shotgun.dataset.aim = "2";
+                setTimeout(() => {
+                    alert("Fired a live shell!");
+                    damage("player2", 1);
+                }, 1000);
+
+            }
+        }
+
+
+    } else {
+
+        if (turn == 1) {
+            if (player === "opponent") {
+                shotgun.dataset.aim = "2";
+                setTimeout(() => {
+                    alert("Fired a blank shell!");
+                }, 1000);
+
+            } else if (player === "self") {
+                shotgun.dataset.aim = "1";
+                setTimeout(() => {
+                    alert("Fired a blank shell!");
+                    nextTurn();
+                }, 1000);
+
+            }
+        }
+
+        if (turn == 2) {
+            if (player === "opponent") {
+                shotgun.dataset.aim = "1";
+                setTimeout(() => {
+                    alert("Fired a blank shell!");
+                }, 1000);
+
+            } else if (player === "self") {
+                shotgun.dataset.aim = "2";
+                setTimeout(() => {
+                    alert("Fired a blank shell!");
+                    nextTurn();
+                }, 1000);
+
+            }
+        }
+
+    }
     nextTurn();
 }
+
 
 function renderHealth() {
     if (player1Health <= 0) {
@@ -142,48 +135,57 @@ function renderHealth() {
 }
 
 function nextTurn() {
-    setTimeout(() => {
-        if (turn == 1) {
-            turn = 2;
-        } else {
-            turn = 1;
+
+    if (chamber.length > 0) {
+
+        setTimeout(() => {
+            if (turn == 1) {
+                turn = 2;
+            } else {
+                turn = 1;
+            }
+            renderTurn();
+            shotgun.dataset.aim = "";
+        }, 1000);
+        
+        function renderTurn() {
+            if (turn == 1) {
+                document.getElementById("player-2").classList.remove("active");
+                document.getElementById("player-1").classList.add("active");
+                
+            } else {
+                document.getElementById("player-1").classList.remove("active");
+                document.getElementById("player-2").classList.add("active");
+                
+            }
         }
-        renderTurn();
-        shotgun.dataset.aim = "";
-    }, 1000);
-}
-
-function renderTurn() {
-    if (turn == 1) {
-        document.getElementById("player-2").classList.remove("active");
-        document.getElementById("player-1").classList.add("active");
-
     } else {
-        document.getElementById("player-1").classList.remove("active");
-        document.getElementById("player-2").classList.add("active");
-
+        alert("No shells in the chamber! Reloading...");
+        setTimeout(() => {
+            reload();
+        }, 1000);
     }
 }
 
-function reload() {
-    liveShells = 3;
-    blankShells = 2;
-    alert(`${liveShells} live & ${blankShells} blank shells`);
-    chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
-    shuffleArray(chamber);
-}
+    function reload() {
+        liveShells = 3;
+        blankShells = 2;
+        alert(`${liveShells} live & ${blankShells} blank shells`);
+        chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
+        shuffleArray(chamber);
+    }
 
-function startGame() {
-    liveShells = 1;
-    blankShells = 2;
-    chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
-    shuffleArray(chamber);
-    player1Health = 2;
-    player2Health = 2;
-    renderHealth();
-    turn = Math.floor(Math.random() * 2) + 1;
-    renderTurn();
-    alert(`Game started! ${liveShells} live & ${blankShells} blank shells`);
-}
+    function startGame() {
+        liveShells = 1;
+        blankShells = 2;
+        chamber = Array(blankShells).fill('blank').concat(Array(liveShells).fill('live'));
+        shuffleArray(chamber);
+        player1Health = 2;
+        player2Health = 2;
+        renderHealth();
+        turn = Math.floor(Math.random() * 2) + 1;
+        renderTurn();
+        alert(`Game started! ${liveShells} live & ${blankShells} blank shells`);
+    }
 
-startGame();
+    startGame();
