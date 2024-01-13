@@ -3,9 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <script async src="game.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game</title>
+    <title>Buckshot Roulette</title>
     <link rel="stylesheet" href="style.css">
     <script src="//unpkg.com/alpinejs" defer></script>
 </head>
@@ -16,15 +15,72 @@
 
         <div id="player-2" class="player">Player 2: <span id="player-2-health"></span></div>
 
-        <div @mouseover="open = true" @mouseover.outside="open = false" x-data="{ open: false }" id="shotgun-wrapper">
-            <button class="action-button" x-show="open" x-transition onclick="shoot('opponent')" id="shoot-opponent">OPPONENT</button>
-            <img :style="{ scale: open ? 1.1 : '' }" id="shotgun" src="images/shotgun.png" alt="A picture of a shotgun">
-            <button class="action-button" x-show="open" x-transition onclick="shoot('self')" id="shoot-self">YOU</button>
+        <!-- Table -->
+        <div id="table">
+            <div id="field-player-2" class="field">
+                <div id="item-field-wrapper-player-2-right" class="item-field-wrapper">
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                </div>
+
+                <div id="item-box-player-2" class="item-box"></div>
+
+                <div id="item-field-wrapper-player-2-left" class="item-field-wrapper">
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                </div>
+            </div>
+
+            <div id="middle-divider">
+                <div id="ammo-field-wrapper">
+                    <div id="ammo-field"></div>
+                    <div id="ammo-field"></div>
+                    <div id="ammo-field"></div>
+                    <div id="ammo-field"></div>
+                    <div id="ammo-field"></div>
+                    <div id="ammo-field"></div>
+                    <div id="ammo-field"></div>
+                    <div id="ammo-field"></div>
+                </div>
+
+            </div>
+
+            <!-- Shotgun -->
+            <div @mouseover="open = true" @mouseover.outside="open = false" x-data="{ open: false }" id="shotgun-wrapper">
+                <button class="action-button" x-show="open" x-transition onclick="shoot('opponent')" id="shoot-opponent">OPPONENT</button>
+                <img :style="{ scale: open ? 1.1 : '' }" id="shotgun" src="images/shotgun.png" alt="A picture of a shotgun">
+                <button class="action-button" x-show="open" x-transition onclick="shoot('self')" id="shoot-self">YOU</button>
+            </div>
+
+            <div style="align-items: end;" id="field-player-2" class="field">
+                <div id="item-field-wrapper-player-2-right" class="item-field-wrapper">
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                </div>
+
+                <div id="item-box-player-2" class="item-box"></div>
+
+                <div id="item-field-wrapper-player-2-left" class="item-field-wrapper">
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                    <div class="item-field"></div>
+                </div>
+            </div>
+
         </div>
 
         <div id="player-1" class="player">Player 1: <span id="player-1-health"></span></div>
 
     </div>
+
+    <script src="game.js"></script>
 </body>
 
 </html>
