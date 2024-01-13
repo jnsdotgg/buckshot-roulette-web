@@ -29,7 +29,6 @@ function shuffleArray(array) {
 }
 
 function shoot(player) {
-
     const shell = chamber.pop()
     if (shell === "live") {
 
@@ -153,20 +152,26 @@ function renderTurn() {
     }
 }
 
+function fillChamber(live, blank) {
+    const newChamber = Array(blank).fill("blank").concat(Array(live).fill("live"))
+    shuffleArray(newChamber)
+    // This is done to prevent a possible race condition (an action like a shot could possibly fire before chamber is shuffled)
+    // To prevent this possibility, a temporary chamber is created and then assigned to main chamber
+    chamber = newChamber
+}
+
 function reload() {
     alert("No shells left! Reloading...")
     liveShells = 3
     blankShells = 2
+    fillChamber(liveShells, blankShells)
     alert(`${liveShells} live & ${blankShells} blank shells`)
-    chamber = Array(blankShells).fill("blank").concat(Array(liveShells).fill("live"))
-    shuffleArray(chamber)
 }
 
 function startGame() {
     liveShells = 1
     blankShells = 2
-    chamber = Array(blankShells).fill("blank").concat(Array(liveShells).fill("live"))
-    shuffleArray(chamber)
+    fillChamber(liveShells, blankShells)
     player1Health = 2
     player2Health = 2
     renderHealth()
