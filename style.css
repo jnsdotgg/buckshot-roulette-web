@@ -13,6 +13,7 @@ body {
     color: white;
     font-family: system-ui;
     text-align: center;
+    cursor: url("images/xp_point.png"), auto;
 }
 
 #game {
@@ -95,7 +96,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    cursor: pointer;
+    cursor: url("images/xp_hover.png"), auto;
     margin: -10rem 2rem;
     border: 2px solid #444;
     border-radius: 50%;
@@ -124,7 +125,7 @@ body {
     display: block;
     z-index: 99;
     transition: scale .2s;
-    cursor: pointer;
+    cursor: url("images/xp_hover.png"), auto;
     border: none;
     background-color: transparent;
     padding: 1rem;
