@@ -51,9 +51,6 @@ function shuffleArray(array) {
 }
 
 function shoot(player) {
-    if (chamber.length == 0) {
-        reload()
-    }
     const shell = chamber.pop()
     if (shell === "live") {
         if (turn == 1) {
@@ -115,6 +112,7 @@ function shoot(player) {
                     animateAction("blank")
                     display("Fired a blank shell!")
                     nextTurn()
+                    nextTurn()
                 }, 1000)
 
             }
@@ -134,6 +132,7 @@ function shoot(player) {
                 setTimeout(() => {
                     animateAction("blank")
                     display("Fired a blank shell!")
+                    nextTurn()
                     nextTurn()
                 }, 1000)
             }
@@ -162,7 +161,12 @@ function renderHealth() {
 
 function nextTurn() {
     setTimeout(() => {
+
+        if (chamber.length == 0) {
+            reload()
+        }
         shotgun.dataset.aim = ""
+
         if (turn == 1) {
             turn = 2
         } else {
@@ -191,11 +195,10 @@ function fillChamber(live, blank) {
 }
 
 function reload() {
-    display("No shells left! Reloading...")
     liveShells = 3
     blankShells = 2
     fillChamber(liveShells, blankShells)
-    display(`${liveShells} live & ${blankShells} blank shells`)
+    display(`No shells left! Reloading... ${liveShells} live & ${blankShells} blank shells`)
 }
 
 function startGame() {

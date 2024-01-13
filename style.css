@@ -10,7 +10,7 @@
 body {
     display: grid;
     place-items: center;
-    cursor: url(images/xp_point.png), auto;
+    cursor: url(images/cursor_xp_point.png), auto;
     background-color: #000;
     height: 100dvh;
     overflow: hidden;
@@ -65,6 +65,11 @@ body {
     position: relative;
     margin-block: 2rem;
     background-color: black;
+}
+
+.field,
+#middle-divider {
+    opacity: 0 !important;
 }
 
 .field {
@@ -145,7 +150,7 @@ body {
     rotate: -75deg;
     z-index: 999;
     transition: scale .2s, transform .4s, rotate .3s;
-    cursor: url(images/xp_hover.png), auto;
+    cursor: url(images/cursor_xp_hover.png), auto;
     overflow: visible;
 }
 
@@ -194,7 +199,7 @@ body {
     display: block;
     z-index: 99;
     transition: scale .2s;
-    cursor: url(images/xp_hover.png), auto;
+    cursor: url(images/cursor_xp_hover.png), auto;
     border: none;
     background-color: transparent;
     padding: 1rem;
