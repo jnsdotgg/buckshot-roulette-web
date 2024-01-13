@@ -29,9 +29,11 @@ function shuffleArray(array) {
 }
 
 function shoot(player) {
+    if (chamber.length == 0) {
+        reload()
+    }
     const shell = chamber.pop()
     if (shell === "live") {
-
         if (turn == 1) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "2"
@@ -46,7 +48,6 @@ function shoot(player) {
                     alert("Fired a live shell!")
                     damage("player1", 1)
                 }, 1000)
-
             }
         }
 
@@ -64,13 +65,11 @@ function shoot(player) {
                     alert("Fired a live shell!")
                     damage("player2", 1)
                 }, 1000)
-
             }
         }
 
 
     } else {
-
         if (turn == 1) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "2"
@@ -103,9 +102,6 @@ function shoot(player) {
                 }, 1000)
             }
         }
-    }
-    if (chamber === 0) {
-        reload()
     }
 
     nextTurn()
