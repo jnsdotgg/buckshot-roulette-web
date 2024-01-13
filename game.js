@@ -5,11 +5,6 @@ let blankShells
 let liveShells
 let chamber
 
-const statusElement = document.getElementById("status")
-const player1HealthElement = document.getElementById("player-1-health")
-const player2HealthElement = document.getElementById("player-2-health")
-const turnIndicatorElement = document.getElementById("turn-indicator")
-const shotgun = document.getElementById("shotgun")
 
 function setStatus(message) {
     statusElement.innerHTML = message
@@ -28,7 +23,7 @@ function damage(player, amount) {
 
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1))
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]]
     }
 }
@@ -180,4 +175,18 @@ function startGame() {
     alert(`Game started! ${liveShells} live & ${blankShells} blank shells`)
 }
 
-startGame()
+function delegate(func) {
+    if (document.readyState != "loading") {
+        func()
+    } else {
+        document.addEventListener("DOMContentLoaded", func)
+    }
+}
+delegate(() => {
+    window.statusElement = document.getElementById("status")
+    window.player1HealthElement = document.getElementById("player-1-health")
+    window.player2HealthElement = document.getElementById("player-2-health")
+    window.turnIndicatorElement = document.getElementById("turn-indicator")
+    window.shotgun = document.getElementById("shotgun")
+    startGame()
+})
