@@ -12,13 +12,16 @@
 
 <body>
 
-    <div id="game">
+    <div id="game" x-data="{ showShootOptions: false }">
 
-        <div id="player-2" class="player">Player 2: <span id="player-2-health"></span></div>
+        <div id="display"></div>
+        <br>
+
+        <div id="player-2" class="player">Player 2<span id="player-2-health"></span></div>
 
         <!-- Table -->
         <div id="table">
-            <div id="field-player-2" class="field">
+            <div id="field-player-2" :style="{ opacity: showShootOptions ? .1 : '' }" class="field">
                 <div id="item-field-wrapper-player-2-right" class="item-field-wrapper">
                     <div class="item-field"></div>
                     <div class="item-field"></div>
@@ -36,28 +39,30 @@
                 </div>
             </div>
 
-            <div id="middle-divider">
+            <div :style="{ opacity: showShootOptions ? .1 : '' }" id="middle-divider">
                 <div id="ammo-field-wrapper">
-                    <div id="ammo-field"></div>
-                    <div id="ammo-field"></div>
-                    <div id="ammo-field"></div>
-                    <div id="ammo-field"></div>
-                    <div id="ammo-field"></div>
-                    <div id="ammo-field"></div>
-                    <div id="ammo-field"></div>
-                    <div id="ammo-field"></div>
+                    <div class="ammo-field" id="ammo-field-1"></div>
+                    <div class="ammo-field" id="ammo-field-2"></div>
+                    <div class="ammo-field" id="ammo-field-3"></div>
+                    <div class="ammo-field" id="ammo-field-4"></div>
+                    <div class="ammo-field" id="ammo-field-5"></div>
+                    <div class="ammo-field" id="ammo-field-6"></div>
+                    <div class="ammo-field" id="ammo-field-7"></div>
+                    <div class="ammo-field" id="ammo-field-8"></div>
                 </div>
 
             </div>
 
             <!-- Shotgun -->
-            <div @mouseover="open = true" @mouseover.outside="open = false" x-data="{ open: false }" id="shotgun-wrapper">
-                <button class="action-button" x-show="open" x-transition onclick="shoot('opponent')" id="shoot-opponent">OPPONENT</button>
-                <img :style="{ scale: open ? 1.1 : '' }" id="shotgun" src="images/shotgun.png" alt="A picture of a shotgun">
-                <button class="action-button" x-show="open" x-transition onclick="shoot('self')" id="shoot-self">YOU</button>
+            <div id="shotgun-wrapper">
+                <button class="action-button" @click="showShootOptions = false" x-show="showShootOptions" x-transition onclick="shoot('opponent')" id="shoot-opponent">OPPONENT</button>
+                <div @click="showShootOptions = true" :style="{ scale: showShootOptions ? 1.1 : '', rotate: showShootOptions ? '-15deg' : '' }" id="shotgun">
+                    <img src="images/shotgun.png" alt="A picture of a shotgun">
+                </div>
+                <button class="action-button" @click="showShootOptions = false" x-show="showShootOptions" x-transition onclick="shoot('self')" id="shoot-self">YOU</button>
             </div>
 
-            <div style="align-items: end;" id="field-player-2" class="field">
+            <div :style="{ opacity: showShootOptions ? .1 : '' }" style="align-items: end;" id="field-player-2" class="field">
                 <div id="item-field-wrapper-player-2-right" class="item-field-wrapper">
                     <div class="item-field"></div>
                     <div class="item-field"></div>
@@ -77,9 +82,10 @@
 
         </div>
 
-        <div id="player-1" class="player">Player 1: <span id="player-1-health"></span></div>
+        <div id="player-1" class="player">Player 1 <span id="player-1-health"></span></div>
 
     </div>
+
 </body>
 
 </html>
