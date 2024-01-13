@@ -6,8 +6,8 @@ let liveShells
 let chamber
 
 
-function setStatus(message) {
-    statusElement.innerHTML = message
+function display(message) {
+    displayElement.innerHTML = message
 }
 
 function damage(player, amount) {
@@ -38,14 +38,14 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
-                    alert("Fired a live shell!")
+                    display("Fired a live shell!")
                     damage("player2", 1)
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
-                    alert("Fired a live shell!")
+                    display("Fired a live shell!")
                     damage("player1", 1)
                 }, 1000)
             }
@@ -55,14 +55,14 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
-                    alert("Fired a live shell!")
+                    display("Fired a live shell!")
                     damage("player1", 1)
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
-                    alert("Fired a live shell!")
+                    display("Fired a live shell!")
                     damage("player2", 1)
                 }, 1000)
             }
@@ -74,13 +74,13 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
-                    alert("Fired a blank shell!")
+                    display("Fired a blank shell!")
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
-                    alert("Fired a blank shell!")
+                    display("Fired a blank shell!")
                     nextTurn()
                 }, 1000)
 
@@ -91,13 +91,13 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
-                    alert("Fired a blank shell!")
+                    display("Fired a blank shell!")
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
-                    alert("Fired a blank shell!")
+                    display("Fired a blank shell!")
                     nextTurn()
                 }, 1000)
             }
@@ -111,14 +111,14 @@ function shoot(player) {
 function renderHealth() {
     if (player1Health <= 0) {
         setTimeout(() => {
-            alert("Player 2 won!")
+            display("Player 2 won!")
             startGame()
         }, 1000)
     }
 
     if (player2Health <= 0) {
         setTimeout(() => {
-            alert("Player 1 won!")
+            display("Player 1 won!")
             startGame()
         }, 1000)
     }
@@ -157,11 +157,11 @@ function fillChamber(live, blank) {
 }
 
 function reload() {
-    alert("No shells left! Reloading...")
+    display("No shells left! Reloading...")
     liveShells = 3
     blankShells = 2
     fillChamber(liveShells, blankShells)
-    alert(`${liveShells} live & ${blankShells} blank shells`)
+    display(`${liveShells} live & ${blankShells} blank shells`)
 }
 
 function startGame() {
@@ -173,7 +173,7 @@ function startGame() {
     renderHealth()
     turn = Math.floor(Math.random() * 2) + 1
     renderTurn()
-    alert(`Game started! ${liveShells} live & ${blankShells} blank shells`)
+    display(`Game started! ${liveShells} live & ${blankShells} blank shells`)
 }
 
 function delegate(func) {
@@ -184,7 +184,7 @@ function delegate(func) {
     }
 }
 delegate(() => {
-    window.statusElement = document.getElementById("status")
+    window.displayElement = document.getElementById("display")
     window.player1HealthElement = document.getElementById("player-1-health")
     window.player2HealthElement = document.getElementById("player-2-health")
     window.turnIndicatorElement = document.getElementById("turn-indicator")
