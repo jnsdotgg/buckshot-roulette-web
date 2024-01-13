@@ -122,6 +122,7 @@ body {
 
 .action-button {
     display: block;
+    z-index: 99;
     transition: scale .2s;
     cursor: pointer;
     border: none;
