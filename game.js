@@ -7,7 +7,21 @@ let chamber
 
 
 function display(message) {
-    displayElement.innerHTML = message
+    displayElement.innerHTML = ""
+    displayElement.style.opacity = 1
+    let index = 0;
+    function type() {
+        if (index < message.length) {
+            displayElement.innerHTML += message.charAt(index);
+            index++;
+            setTimeout(type, 25);
+        } else {
+            setTimeout(() => {
+                displayElement.style.opacity = 0
+            }, 2000)
+        }
+    }
+    type();
 }
 
 function damage(player, amount) {
@@ -19,6 +33,14 @@ function damage(player, amount) {
         player2Health -= amount
     }
     renderHealth()
+}
+
+function animateAction(action) {
+    const actionClass = `animate-shoot-${action}`
+    shotgun.classList.add(actionClass)
+    setTimeout(() => {
+        shotgun.classList.remove(actionClass)
+    }, 1000)
 }
 
 function shuffleArray(array) {
@@ -38,15 +60,19 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
+                    animateAction("live")
                     display("Fired a live shell!")
                     damage("player2", 1)
+                    nextTurn()
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
+                    animateAction("live")
                     display("Fired a live shell!")
                     damage("player1", 1)
+                    nextTurn()
                 }, 1000)
             }
         }
@@ -55,15 +81,19 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
+                    animateAction("live")
                     display("Fired a live shell!")
                     damage("player1", 1)
+                    nextTurn()
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
+                    animateAction("live")
                     display("Fired a live shell!")
                     damage("player2", 1)
+                    nextTurn()
                 }, 1000)
             }
         }
@@ -74,12 +104,15 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
+                    animateAction("blank")
                     display("Fired a blank shell!")
+                    nextTurn()
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
+                    animateAction("blank")
                     display("Fired a blank shell!")
                     nextTurn()
                 }, 1000)
@@ -91,20 +124,21 @@ function shoot(player) {
             if (player === "opponent") {
                 shotgun.dataset.aim = "1"
                 setTimeout(() => {
+                    animateAction("blank")
                     display("Fired a blank shell!")
+                    nextTurn()
                 }, 1000)
 
             } else if (player === "self") {
                 shotgun.dataset.aim = "2"
                 setTimeout(() => {
+                    animateAction("blank")
                     display("Fired a blank shell!")
                     nextTurn()
                 }, 1000)
             }
         }
     }
-
-    nextTurn()
 }
 
 
@@ -122,8 +156,8 @@ function renderHealth() {
             startGame()
         }, 1000)
     }
-    player1HealthElement.innerText = "⚡️".repeat(player1Health)
-    player2HealthElement.innerText = "⚡️".repeat(player2Health)
+    player1HealthElement.innerHTML = "<img src='images/defib_charge.png' class='charge'>".repeat(player1Health)
+    player2HealthElement.innerHTML = "<img src='images/defib_charge.png' class='charge'>".repeat(player2Health)
 }
 
 function nextTurn() {
