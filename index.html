@@ -11,6 +11,8 @@
 
 <body>
 
+    <div id="filter"></div>
+
     <div id="game" x-data="{ showShootOptions: false }">
 
         <div id="display"></div>
@@ -55,7 +57,8 @@
             <!-- Shotgun -->
             <div id="shotgun-wrapper">
                 <button class="action-button" @click="showShootOptions = false" x-show="showShootOptions" x-transition onclick="shoot('opponent')" id="shoot-opponent">OPPONENT</button>
-                <div @click="showShootOptions = true" :style="{ scale: showShootOptions ? 1.1 : '', rotate: showShootOptions ? '-15deg' : '' }" id="shotgun">
+                <div @click="showShootOptions = true" :style="{ scale: showShootOptions ? 1.1 : '', rotate: showShootOptions ? '-15deg' : '', pointerEvents: showShootOptions ? 'none' : '' }"
+                    id="shotgun">
                     <img src="images/shotgun.png" alt="A picture of a shotgun">
                 </div>
                 <button class="action-button" @click="showShootOptions = false" x-show="showShootOptions" x-transition onclick="shoot('self')" id="shoot-self">YOU</button>
